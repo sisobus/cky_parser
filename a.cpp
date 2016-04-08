@@ -119,6 +119,17 @@ void printParsedInputString(vector<string>& parsedInputString) {
         printf("%s ",parsedInputString[i].c_str());
     puts("");
 }
+void selfParsing(Grammer& grammer,Cky& cky,int i,int j) {
+    pair<multimap<vector<string>,string>::iterator,multimap<vector<string>,string>::iterator> foundGrammer;
+    set<string> copy = cky.table[i][j];
+    for ( set<string>::iterator it=copy.begin();it!=copy.end();it++ ) {
+        vector<string> cur;
+        cur.push_back(*it);
+        foundGrammer = grammer.bg.equal_range(cur);
+        for ( multimap<vector<string>,string>::iterator it=foundGrammer.first;it!=foundGrammer.second; it++ ) 
+            cky.table[i][j].insert(it->second);
+    }
+}
 Cky calculateCky(Grammer& grammer,vector<string>& parsedInputString) {
     Cky cky((int)parsedInputString.size());    
     
@@ -136,23 +147,8 @@ Cky calculateCky(Grammer& grammer,vector<string>& parsedInputString) {
         for ( int j = 0 ; j <= n-l ; j++ ) {
             for ( int i = l-2 ; i >= 0 ; i-- ) {
                 /* self parsing */
-                set<string> copy = cky.table[i][j];
-                for ( set<string>::iterator it=copy.begin();it!=copy.end();it++ ) {
-                    vector<string> cur;
-                    cur.push_back(*it);
-                    foundGrammer = grammer.bg.equal_range(cur);
-                    for ( multimap<vector<string>,string>::iterator it=foundGrammer.first;it!=foundGrammer.second; it++ ) 
-                        cky.table[i][j].insert(it->second);
-                }
-                copy.clear();
-                copy = cky.table[l-i-2][j+i+1];
-                for ( set<string>::iterator it=copy.begin();it!=copy.end();it++ ) {
-                    vector<string> cur;
-                    cur.push_back(*it);
-                    foundGrammer = grammer.bg.equal_range(cur);
-                    for ( multimap<vector<string>,string>::iterator it=foundGrammer.first;it!=foundGrammer.second; it++ ) 
-                        cky.table[l-i-2][j+i+1].insert(it->second);
-                }
+                selfParsing(grammer,cky,i,j);
+                selfParsing(grammer,cky,l-i-2,j+i+1);
                 /* self parsing end */
 
                 set<string> lhs = cky.table[i][j];
