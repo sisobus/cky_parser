@@ -132,33 +132,58 @@ Cky calculateCky(Grammer& grammer,vector<string>& parsedInputString) {
         }
     }
     int n = (int)parsedInputString.size();
-    for ( int l = 2 ; l < n ; l++ ) {
-        
-    }
-    /*
-    for ( int i = 1 ; i < (int)parsedInputString.size() ; i++ ) 
-        for ( int j = 0 ; j < (int)parsedInputString.size()-i ; j++ ) 
-            for ( int k = 0 ; k < i ; k++ ) {
-                set<string> left = cky.table[j][j+k];
-                set<string> right = cky.table[j+k+1][j+i];
-                for ( set<string>::iterator it1=left.begin();it1!=left.end();it1++ ) 
-                    for ( set<string>::iterator it2=right.begin();it2!=right.end();it2++ ) {
-                        printf("@@@ i:%d j:%d k:%d it1:%s it2:%s\n",i,j,k,(*it1).c_str(),(*it2).c_str());
-                        printf("### left : [%d,%d] right: [%d,%d]\n",j,j+k,j+k+1,j+i);
+    for ( int l = 2 ; l <= n ; l++ ) {
+        for ( int j = 0 ; j <= n-l ; j++ ) {
+            for ( int i = l-2 ; i >= 0 ; i-- ) {
+                /* self parsing */
+                set<string> copy = cky.table[i][j];
+                for ( set<string>::iterator it=copy.begin();it!=copy.end();it++ ) {
+                    vector<string> cur;
+                    cur.push_back(*it);
+                    foundGrammer = grammer.bg.equal_range(cur);
+                    for ( multimap<vector<string>,string>::iterator it=foundGrammer.first;it!=foundGrammer.second; it++ ) 
+                        cky.table[i][j].insert(it->second);
+                }
+                copy.clear();
+                copy = cky.table[l-i-2][j+i+1];
+                for ( set<string>::iterator it=copy.begin();it!=copy.end();it++ ) {
+                    vector<string> cur;
+                    cur.push_back(*it);
+                    foundGrammer = grammer.bg.equal_range(cur);
+                    for ( multimap<vector<string>,string>::iterator it=foundGrammer.first;it!=foundGrammer.second; it++ ) 
+                        cky.table[l-i-2][j+i+1].insert(it->second);
+                }
+                /* self parsing end */
+
+                set<string> lhs = cky.table[i][j];
+                set<string> rhs = cky.table[l-i-2][j+i+1];
+                for ( set<string>::iterator it1=lhs.begin();it1!=lhs.end();it1++ ) {
+                    for ( set<string>::iterator it2=rhs.begin();it2!=rhs.end();it2++ ) {
                         vector<string> cur;
                         cur.push_back(*it1);
                         cur.push_back(*it2);
                         foundGrammer = grammer.bg.equal_range(cur);
                         for ( multimap<vector<string>,string>::iterator it=foundGrammer.first;it!=foundGrammer.second; it++ ) 
-                            cky.table[j][j+i].insert(it->second);
+                            cky.table[l-1][j].insert(it->second);
                     }
+                }
             }
-            */
+        }
+    }
     return cky;
 }
-int main() {
-    Grammer grammer = initGrammer("grammer.txt");
-    vector<vector<string> > parsedInputString = initInputString("input.txt");
+int main(int argc,char *argv[]) {
+    string grammerFilename = "grammer.txt";
+    string inputFilename = "input.txt";
+    if ( argc == 3 ) {
+        char buf[1024];
+        sscanf(argv[1],"%s",buf);
+        grammerFilename = buf;
+        sscanf(argv[2],"%s",buf);
+        inputFilename = buf;
+    }
+    Grammer grammer = initGrammer(grammerFilename);
+    vector<vector<string> > parsedInputString = initInputString(inputFilename);
 #ifdef DEBUG
     grammer.printG();
     grammer.printBg();
