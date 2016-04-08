@@ -1,0 +1,216 @@
+/*
+ * cky parser start
+ * input string : the man saw the boy with the telescope 
+ */
+det -> the
+n -> man
+v -> man
+v -> saw
+n -> saw
+det -> the
+n -> boy
+v -> boy
+p -> with
+det -> the
+n -> telescope
+DT -> det
+NP -> n
+VP -> v
+NP -> DT NP
+NP -> n
+VP -> v
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+NP -> n
+VP -> v
+DT -> det
+DT -> det
+NP -> n
+VP -> v
+NP -> DT NP
+NP -> n
+VP -> v
+P -> p
+P -> p
+DT -> det
+DT -> det
+NP -> n
+NP -> DT NP
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+DT -> det
+NP -> DT NP
+DT -> det
+NP -> n
+VP -> v
+NP -> n
+VP -> v
+NP -> n
+VP -> v
+VP -> VP NP
+P -> p
+DT -> det
+DT -> det
+NP -> n
+VP -> v
+NP -> n
+P -> p
+PP -> P NP
+DT -> det
+DT -> det
+NP -> n
+VP -> v
+VP -> VP NP
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+P -> p
+NP -> n
+VP -> v
+DT -> det
+DT -> det
+NP -> n
+NP -> n
+VP -> v
+NP -> NP PP
+VP -> VP PP
+VP -> VP PP
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+DT -> det
+NP -> DT NP
+P -> p
+NP -> n
+VP -> v
+DT -> det
+NP -> n
+VP -> v
+NP -> n
+NP -> NP PP
+DT -> det
+NP -> DT NP
+P -> p
+DT -> det
+DT -> det
+NP -> n
+VP -> v
+NP -> n
+VP -> VP PP
+VP -> VP PP
+NP -> n
+VP -> v
+VP -> VP NP
+VP -> VP NP
+DT -> det
+DT -> det
+NP -> n
+NP -> NP PP
+VP -> VP PP
+VP -> VP PP
+VP -> VP NP
+VP -> VP NP
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+NP -> n
+NP -> NP PP
+NP -> NP PP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+S -> NP VP
+NP -> NP VP
+DT -> det
+NP -> DT NP
+NP -> DT NP
+NP -> DT NP
+NP -> DT NP
+(S (NP (DT (det the))(NP (n man)))(VP (VP (VP (v saw))(NP (DT (det the))(NP (n boy))))(PP (P (p with))(NP (DT (det the))(NP (n telescope))))))
+(S (NP (DT (det the))(NP (n man)))(VP (VP (v saw))(NP (DT (det the))(NP (NP (n boy))(PP (P (p with))(NP (DT (det the))(NP (n telescope))))))))
+(S (NP (DT (det the))(NP (n man)))(VP (VP (v saw))(NP (NP (DT (det the))(NP (n boy)))(PP (P (p with))(NP (DT (det the))(NP (n telescope)))))))
+/*
+ * cky parser start
+ * input string : time flies like an arrow 
+ */
+n -> time
+v -> time
+n -> flies
+v -> flies
+p -> like
+v -> like
+det -> an
+n -> arrow
+NP -> n
+VP -> v
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+NP -> n
+VP -> v
+P -> p
+VP -> v
+S -> NP VP
+NP -> NP VP
+P -> p
+VP -> v
+DT -> det
+DT -> det
+NP -> n
+NP -> DT NP
+P -> p
+VP -> v
+S -> NP VP
+NP -> NP VP
+NP -> n
+VP -> v
+VP -> VP NP
+DT -> det
+NP -> n
+VP -> v
+NP -> n
+P -> p
+VP -> v
+PP -> P NP
+VP -> VP NP
+DT -> det
+NP -> n
+VP -> v
+NP -> n
+NP -> n
+VP -> v
+NP -> NP PP
+S -> NP VP
+NP -> NP VP
+VP -> VP PP
+VP -> VP PP
+NP -> n
+VP -> VP NP
+NP -> NP PP
+S -> NP VP
+NP -> NP VP
+VP -> VP PP
+VP -> VP PP
+NP -> n
+VP -> v
+S -> NP VP
+NP -> NP VP
+VP -> VP NP
+VP -> VP NP
+(S (NP (NP (n time))(VP (v flies)))(VP (VP (v like))(NP (DT (det an))(NP (n arrow)))))
+(S (NP (n time))(VP (VP (v flies))(PP (P (p like))(NP (DT (det an))(NP (n arrow))))))

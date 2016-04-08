@@ -22,8 +22,8 @@ n -> saw
 p -> with
 n -> time
 v -> time
-n -> files
-v -> files
+n -> flies 
+v -> flies
 p -> like
 v -> like
 det -> an
